@@ -1,26 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {CreateHero} from './ui/CreateHero';
+import {MainMenu} from './ui/MainMenu';
+import {View} from './core/view';
+import {useSelector} from 'react-redux';
+import {useAppState} from './redux/hooks';
+import {Home} from './ui/Home';
+import {match} from 'variant';
+import {AboutPage} from './ui/AboutPage';
+import {OptionsPage} from './ui/OptionsPage';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const view = useAppState(s => s.view);
+    return (
+        <div className="App">
+            {match(view, {
+                About: _ => <AboutPage />,
+                CharacterCreation: _ => <CreateHero />,
+                Home: _ => <Home />,
+                MainMenu: _ => <MainMenu />,
+                Options: _ => <OptionsPage />
+            })}
+        </div>
+    );
 }
 
 export default App;
