@@ -12,6 +12,12 @@ export const MainMenu = ({}: MainMenuProps) => {
     const isGameRunning = useAppState(s => s.game != undefined);
     return (
         <div className='main-menu'>
+            <div className='titlecard'>Kind of Super</div>
+            <p className='description' style={{padding: '0 2rem'}}>
+                A game about superpowers, type theory, and puns. Create your
+                team of superheroes to defend the city against threats, natural
+                and supernatural.
+            </p>
             <ul>
                 {isGameRunning && (
                     <li>

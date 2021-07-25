@@ -1,8 +1,13 @@
+import {NotReady, Ready} from 'core/ready';
 import {Superpower} from 'core/superpower';
+import {View} from 'core/view';
 import {useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Action} from 'redux/actions';
-import {useAppState} from 'redux/hooks';
+import {useAppState, useReady} from 'redux/hooks';
+import {isType} from 'variant';
+import {Well} from './lib/Well';
+import {Link} from './Link';
 import {PowerForm} from './PowerForm';
 import {PowerSummary} from './PowerSummary';
 
@@ -20,20 +25,19 @@ export const CreateHero = ({}: CreateHeroProps) => {
 
     }, [powers]);
 
-    const ready = useMemo(() => {
-        return (
-               heroName != undefined
-            && heroName != ''
-        )
-    }, [heroName]);
-    
+    const ready = useReady(raise => {
+        if (heroName == undefined || heroName === '') {
+            raise('Hero name cannot be empty');
+        }
+    });
+
     function create() {
-        dispatch(Action.StartGame())
+        dispatch(Action.StartGame());
     }
     return (
         <div>
-            Create a new hero.
-            <input value={heroName} onChange={e => setHeroName(e.currentTarget.value)} />
+            <p>Create a new hero</p>
+            <input placeholder='Superhero Name' value={heroName} onChange={e => setHeroName(e.currentTarget.value)} />
             <div>
                 <p>Powers</p>
                 <ul>
@@ -45,8 +49,13 @@ export const CreateHero = ({}: CreateHeroProps) => {
                 </ul>
             </div>
             <p>Current points: {startingPoints}</p>
-            <PowerForm onSubmit={power => setPowers([...powers, power])} />
-            <button onClick={create} disabled={!ready}>Create</button>
+            <Well>
+                <PowerForm onSubmit={power => setPowers([...powers, power])} />
+            </Well>
+            <button onClick={create} disabled={ready.type === 'NotReady'}>Create</button>
+            <p>
+                <Link text='back' goto={View.MainMenu()} />
+            </p>
         </div>
     );
 }

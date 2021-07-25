@@ -1,8 +1,16 @@
 .main-menu ul {
     list-style: none;
-    margin: 0;
+    margin: 5rem 6rem;
 }
 
 .main-menu li {
     padding: 1rem;
+}
+
+.titlecard {
+    color: slategrey;
+    font-size: 6rem;
+    font-weight: 700;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgrey;
 }

@@ -1,3 +1,4 @@
+import {NotReady, Ready} from 'core/ready';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import {GameState, RootState} from './state';
 
@@ -9,4 +10,15 @@ export const useGame = <T> (selector: (game: GameState) => T) => {
     } else {
         throw new Error('Attempted to render without a game save loaded.');
     }
+}
+
+export function useReady(validate: (raise: (issue: string | JSX.Element) => void) => void) {
+    let issues: Array<string | JSX.Element> = [];
+    validate(issue => {
+        issues.push(issue);
+    });
+
+    return issues.length === 0
+        ? Ready()
+        : NotReady(issues);
 }

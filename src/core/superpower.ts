@@ -1,5 +1,6 @@
 import {fields, Flags, TypeNames, variant, VariantOf} from 'variant';
 
+export type InvisibilityMethod = 'psychic' | 'light manipulation';
 
 export const Superpower = variant({
     /**
@@ -31,7 +32,7 @@ export const Superpower = variant({
          * - **psychic** will fool people.
          * - **light manipulation** will fool cameras.
          */
-        method: 'psychic' | 'light manipulation';
+        method: InvisibilityMethod;
     }>(),
     /**
      * The ability to pass through solid matter.
