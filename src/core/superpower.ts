@@ -18,7 +18,7 @@ export const Superpower = variant({
          */
         speed: number;
         /**
-         * Airtime in seconds.
+         * Airtime in minutes.
          */
         stamina: number;
     }>(),
@@ -46,6 +46,10 @@ export const Superpower = variant({
          * Range in meters.
          */
         range: number;
+        /**
+         * Amount of times it can be used per day.
+         */
+        uses: number;
     }>(),
 })
 export type Superpower<T extends TypeNames<typeof Superpower> = undefined> = VariantOf<typeof Superpower, T>

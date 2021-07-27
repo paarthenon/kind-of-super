@@ -6,13 +6,28 @@ variety of threats to their city.
 This is a demo project meant to show the ways [Variant](https://github.com/paarthenon/variant) can enable elegant
 organization for a complex codebase.
 
-To be as clear an example as possible, I will not use any frameworks or UI libraries. The *only* dependencies will be `variant`,
-and `react-redux`. The project has been created with [CRA](https://github.com/facebook/create-react-app). I will also
-not be demonstrating persistence, error boundaries, or logging techniques in this tutorial, though all of these are
-excellent elements to consider in your real applications. We're going to build a game in the most intuitive way.
+### Philosophy
 
-This is a text-based game that has you create a hero with a variety of superpowers and attempt to survive different
-threats to your city. 
+> To keep the code as clear as possible, I will not use any frameworks or UI libraries like chakra-ui, blueprintjs,
+or TailwindCSS. The *only* dependencies will be `variant`, and `react-redux`. Vue or Angular would work just as well—in
+fact variant has some delightful composability with rxjs. React was chosen because TSX files are simple, and its ability
+to incorporate expressions synergizes remarkably well with pattern matching. The project has been created with 
+[CRA](https://github.com/facebook/create-react-app). I will also not be demonstrating persistence, error boundaries,
+or logging techniques in this tutorial, though all of these are excellent elements to consider in your real applications.
+We're going to build a game in the most intuitive way.
+
+- No component frameworks, use simple `<input>`s, `<select>`s, and `<button>`s
+- No icon packages or svgs, use emoji ❤️
+- No loggers or middleware
+- No redux-toolkit
+    - This project is meant to demonstrate that with proper language primitives, a lot of structures become unnecessary.
+    Variant gives you the ability to organize by subdomain rather than by slice.
+    - The `variant()` function and its supporting tools are superior to `createAction()`
+    - `matcher()` provides more utility than the redux-toolkit match builder.
+- No complex popovers or css tooltips. Just the `title` attribute.
+
+
+****
 
 *(CRA block follows)*
 

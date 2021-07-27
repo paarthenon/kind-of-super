@@ -9,12 +9,12 @@ export const PowerSummary = ({power}: PowerSummaryProps) => {
         <span>
             {match(power, {
                 ElementalMagic: ({element}) => `controls the element of ${element}`,
-                Flight: ({speed, stamina}) => `can fly ${speed} m/s for ${stamina} seconds,
+                Flight: ({speed, stamina}) => `can fly ${speed} m/s for ${stamina} minutes,
                     resulting in a total distance of ${speed * stamina} meters.`,
                 Invisibility: ({method}) => `goes invisible at will. 
                     This ${method === 'light manipulation' ? 'will' : `won't`} fool cameras.`,
                 Phasing: () => `can phase through solid matter`,
-                Teleportation: ({range}) => `teleports at will up to ${range} meters away`,
+                Teleportation: ({range, uses}) => `teleports at will up to ${range} meters away ${uses} times per day`,
             })}
         </span>
     );

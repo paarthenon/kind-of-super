@@ -6,10 +6,11 @@ import {useDispatch} from 'react-redux';
 import {Action} from 'redux/actions';
 import {useAppState, useReady} from 'redux/hooks';
 import {isType} from 'variant';
-import {Well} from './lib/Well';
-import {Link} from './Link';
-import {PowerForm} from './PowerForm';
-import {PowerSummary} from './PowerSummary';
+import {Well} from 'ui/lib/Well';
+import {Link} from 'ui/Link';
+import {PowerForm} from 'ui/form/PowerForm';
+import {PowerSummary} from 'ui/PowerSummary';
+import {Submittable} from './lib/Submittable';
 
 export interface CreateHeroProps {}
 export const CreateHero = ({}: CreateHeroProps) => {
@@ -17,17 +18,23 @@ export const CreateHero = ({}: CreateHeroProps) => {
     const [heroName, setHeroName] = useState('');
     const dispatch = useDispatch();
 
-    const [powers, setPowers] = useState<Superpower[]>([
-        Superpower.ElementalMagic({element: 'air'}),
-        Superpower.Invisibility({method: 'light manipulation'}),
-    ]);
-    const powerCost = useMemo(() => {
-
-    }, [powers]);
+    const [powers, setPowers] = useState<Superpower[]>([]);
 
     const ready = useReady(raise => {
         if (heroName == undefined || heroName === '') {
-            raise('Hero name cannot be empty');
+            raise(<span><b>Hero name</b> cannot be empty</span>);
+        }
+        if (powers.length === 0) {
+            const hoverText = "Yes this is discriminatory. I wish we could change it, but we really can't. It's an insurance thing."
+            raise(
+                <span>
+                    I'm sorry, but our hiring policy requires that {
+                        <span className='hoverable' title={hoverText}>
+                            heroes have powers.
+                        </span>
+                    }
+                </span>
+            )
         }
     });
 
@@ -36,8 +43,8 @@ export const CreateHero = ({}: CreateHeroProps) => {
     }
     return (
         <div>
-            <p>Create a new hero</p>
-            <input placeholder='Superhero Name' value={heroName} onChange={e => setHeroName(e.currentTarget.value)} />
+            <h2>Create a new hero</h2>
+            <input className='name-input' placeholder='Superhero Name' value={heroName} onChange={e => setHeroName(e.currentTarget.value)} />
             <div>
                 <p>Powers</p>
                 <ul>
@@ -52,7 +59,12 @@ export const CreateHero = ({}: CreateHeroProps) => {
             <Well>
                 <PowerForm onSubmit={power => setPowers([...powers, power])} />
             </Well>
-            <button onClick={create} disabled={ready.type === 'NotReady'}>Create</button>
+
+            <Submittable
+                isReady={ready}
+                onSubmit={create}
+                text='Create Hero'
+            />
             <p>
                 <Link text='back' goto={View.MainMenu()} />
             </p>
